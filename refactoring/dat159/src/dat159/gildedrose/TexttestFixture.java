@@ -1,10 +1,13 @@
 package dat159.gildedrose;
 
 import java.io.ByteArrayOutputStream;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +32,7 @@ public class TexttestFixture {
 
         GildedRose app = new GildedRose(items);
 
-        int days = 2;
+        int days = 10;
         if (args.length > 0) {
             days = Integer.parseInt(args[0]) + 1;
         }
@@ -49,7 +52,7 @@ public class TexttestFixture {
 
     @Before
     public void init() {
-        this.workingDir = Path.of("", "src/dat159/gildedrose");
+        this.workingDir = Paths.get("", "src/dat159/gildedrose");
     }
 
     @Test
@@ -63,7 +66,8 @@ public class TexttestFixture {
     	System.err.println(this.workingDir.toUri().toString());
     	
         Path file = this.workingDir.resolve("expected.out");
-        String content = Files.readString(file);
+        String content = new String (Files.readAllBytes(file)); 
+        		
         
         // Run "main":
         TexttestFixture.main(new String[] {"30"});
@@ -71,4 +75,5 @@ public class TexttestFixture {
         // Check:
         assertThat(myOut.toString(),is(content));
     }
+    
 }
